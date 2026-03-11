@@ -1,0 +1,30 @@
+name-template: v$NEXT_PATCH_VERSION
+
+tag-template: v$NEXT_PATCH_VERSION
+
+categories:
+- title: Features
+  labels:
+  - feature
+  - enhancement
+
+- title: Bug Fixes
+  labels:
+  - bug fixes
+
+- title: Documentation
+  labels:
+  - documentation
+
+- title: Maintenance
+  labels:
+  - maintenance
+
+- title: Breaking Code
+  labels:
+  - breaking code
+
+change-template: "PR $TITLE by $AUTHOR"
+
+template: |
+  $CHANGES
