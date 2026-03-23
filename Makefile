@@ -7,7 +7,7 @@
 .PHONY: help install install-dev lint format typecheck test coverage \
         notebook diagram docker-build docker-up docker-down clean
 
-PYTHON  := python3
+PYTHON  := python3.11
 VENV    := .venv
 PIP     := $(VENV)/bin/pip
 PYTEST  := $(VENV)/bin/pytest
