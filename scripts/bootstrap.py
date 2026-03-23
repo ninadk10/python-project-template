@@ -4,9 +4,6 @@ Bootstrap script — run once after clicking "Use this template" on GitHub.
 
 Usage:
     python scripts/bootstrap.py
-
-This script renames all occurrences of `project_name` and placeholder
-values to your actual project details.
 """
 
 import os
@@ -28,7 +25,7 @@ def replace_in_file(path: Path, replacements: dict[str, str]) -> None:
             text = text.replace(old, new)
         path.write_text(text, encoding="utf-8")
     except (UnicodeDecodeError, IsADirectoryError):
-        pass  # skip binary files
+        pass
 
 
 def main() -> None:
@@ -58,14 +55,12 @@ def main() -> None:
 
     print("\n📝  Renaming files and updating content...")
 
-    # Rename src/project_name/ directory
     old_src = root / "src" / "project_name"
     new_src = root / "src" / project_name
     if old_src.exists() and project_name != "project_name":
         shutil.move(str(old_src), str(new_src))
         print(f"   Renamed src/project_name/ → src/{project_name}/")
 
-    # Replace content in all text files
     for path in root.rglob("*"):
         if any(part in skip_dirs for part in path.parts):
             continue
