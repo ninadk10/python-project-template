@@ -25,9 +25,13 @@ repos:
     rev: v1.9.0
     hooks:
       - id: mypy
-        additional_dependencies: []
+        additional_dependencies:
+          - "pydantic>=2.0"
+          - "pydantic-settings>=2.0"
+          - "pytest>=8.0"
 
   - repo: https://github.com/gitleaks/gitleaks
     rev: v8.18.3
     hooks:
       - id: gitleaks
+        exclude: ^\.venv/

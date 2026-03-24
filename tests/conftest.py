@@ -1,5 +1,7 @@
 """Shared pytest fixtures available to all tests."""
 
+from collections.abc import Generator
+
 import pytest
 
 from project_name.config import Settings
@@ -16,7 +18,7 @@ def test_settings() -> Settings:
 
 
 @pytest.fixture(autouse=True)
-def reset_settings_cache() -> None:
+def reset_settings_cache() -> Generator[None, None, None]:
     """Clear the settings LRU cache between tests to avoid state leakage."""
     from project_name.config import get_settings
     get_settings.cache_clear()

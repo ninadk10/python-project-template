@@ -20,12 +20,23 @@ classifiers = [
 
 # ── Runtime dependencies ──────────────────────────────────────────────────────
 dependencies = [
+    "pydantic>=2.0",
+    "pydantic-settings>=2.0",
     # Add your runtime deps here, e.g.:
     # "numpy>=1.26",
     # "pandas>=2.1",
     # "scikit-learn>=1.4",
-    # "pydantic>=2.0",
+    # "opencv-python",
+    # "torch",
+    # "torchvision",
+    # "transformers",
+    # "Pillow",
+    # "mlflow"
 ]
+
+# ── Hatch build config ────────────────────────────────────────────────────────
+[tool.hatch.build.targets.wheel]
+packages = ["src/project_name"]
 
 # ── Optional dependency groups ────────────────────────────────────────────────
 [project.optional-dependencies]
@@ -33,11 +44,12 @@ dev = [
     "ruff>=0.4",
     "mypy>=1.9",
     "pre-commit>=3.7",
+    "pydantic[mypy]>=2.0",
 ]
 test = [
     "pytest>=8.0",
     "pytest-cov>=5.0",
-    "pytest-xdist>=3.5",   # parallel test execution
+    "pytest-xdist>=3.5",
     "pytest-mock>=3.12",
 ]
 notebooks = [
@@ -49,10 +61,10 @@ notebooks = [
 docs = [
     "mkdocs>=1.5",
     "mkdocs-material>=9.0",
-    "diagrams>=0.23",       # architecture diagrams as code
+    "diagrams>=0.23",
 ]
 
-# ── Ruff: linter + formatter (replaces flake8, black, isort) ─────────────────
+# ── Ruff: linter + formatter ──────────────────────────────────────────────────
 [tool.ruff]
 target-version = "py311"
 line-length = 88
@@ -60,32 +72,21 @@ src = ["src"]
 
 [tool.ruff.lint]
 select = [
-    "E",   # pycodestyle errors
-    "W",   # pycodestyle warnings
-    "F",   # pyflakes
-    "I",   # isort
-    "B",   # flake8-bugbear
-    "C4",  # flake8-comprehensions
-    "UP",  # pyupgrade
-    "N",   # pep8-naming
-    "D",   # pydocstyle
+    "E", "W", "F", "I", "B", "C4", "UP", "N", "D",
 ]
 ignore = [
-    "D100",  # Missing docstring in public module
-    "D104",  # Missing docstring in public package
-    "D203",  # 1 blank line required before class docstring (conflicts with D211)
-    "D213",  # Multi-line docstring summary should start at the second line (conflicts with D212)
+    "D100", "D104", "D203", "D213",
 ]
 
 [tool.ruff.lint.per-file-ignores]
-"tests/**" = ["D"]          # no docstring rules in tests
-"notebooks/**" = ["E402"]   # allow imports not at top in notebooks
+"tests/**" = ["D"]
+"notebooks/**" = ["E402"]
 
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"
 
-# ── Mypy: static type checking ────────────────────────────────────────────────
+# ── Mypy ──────────────────────────────────────────────────────────────────────
 [tool.mypy]
 python_version = "3.11"
 strict = true
@@ -93,6 +94,12 @@ warn_return_any = true
 warn_unused_configs = true
 ignore_missing_imports = true
 exclude = ["notebooks/", "docs/"]
+plugins = ["pydantic.mypy"]
+
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+warn_required_dynamic_aliases = true
 
 # ── Pytest ────────────────────────────────────────────────────────────────────
 [tool.pytest.ini_options]
