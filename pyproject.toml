@@ -41,7 +41,7 @@ packages = ["src/project_name"]
 # ── Optional dependency groups ────────────────────────────────────────────────
 [project.optional-dependencies]
 dev = [
-    "ruff>=0.4",
+    "ruff>=0.15.10",
     "mypy>=1.9",
     "pre-commit>=3.7",
     "pydantic[mypy]>=2.0",
